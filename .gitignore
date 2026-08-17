@@ -1,0 +1,10 @@
+node_modules/
+.pnpm-store/
+.npm-cache/
+.next/
+out/
+.env*
+!.env.example
+drizzle/meta/
+*.tsbuildinfo
+coverage/
