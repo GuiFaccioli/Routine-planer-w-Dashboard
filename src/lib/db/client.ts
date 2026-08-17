@@ -1,6 +1,11 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { Pool } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-serverless";
 import * as schema from "./schema";
+
+const globalForDb = globalThis as unknown as {
+  pool?: Pool;
+  db?: ReturnType<typeof drizzle<typeof schema>>;
+};
 
 function getDatabaseUrl(): string {
   const value = process.env.DATABASE_URL;
@@ -9,5 +14,10 @@ function getDatabaseUrl(): string {
 }
 
 export function getDb() {
-  return drizzle(neon(getDatabaseUrl()), { schema });
+  if (!globalForDb.db) {
+    globalForDb.pool ??= new Pool({ connectionString: getDatabaseUrl() });
+    globalForDb.db = drizzle(globalForDb.pool, { schema });
+  }
+
+  return globalForDb.db;
 }
