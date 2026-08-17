@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function ResetPasswordPage() { return <main className="flex min-h-screen items-center justify-center p-5"><div className="panel max-w-md p-7"><h1 className="text-2xl font-black">Redefinir senha</h1><p className="mt-2 muted">Abra este endereço pelo link recebido no email para concluir a redefinição.</p><Link className="btn btn-secondary mt-6 inline-block" href="/sign-in">Voltar para entrar</Link></div></main>; }
