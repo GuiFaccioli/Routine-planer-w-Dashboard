@@ -5,6 +5,7 @@
   --canvas: #fff; --surface: #f7f8fa; --surface-blue: #f0f5ff; --blue: #0052ff; --blue-dark: #003ec4;
   --success: #087443; --danger: #b42318; --warning: #8a5a00; --radius: 14px; --pill: 999px;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --accent: var(--blue); --accent-soft: var(--surface-blue); --warm: var(--surface); --dark: var(--ink);
 }
 * { box-sizing: border-box; }
 html { background: var(--canvas); }
@@ -13,6 +14,8 @@ button, input, select { font: inherit; } button { cursor: pointer; } button:disa
 a { color: inherit; } h1, h2, h3, p { text-wrap: pretty; } h1, h2, h3 { letter-spacing: -.025em; }
 .shell { min-height: 100vh; } .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; } .page { padding: 48px 0 72px; }
 .muted { color: var(--body); } .panel { background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius); }
+.editorial-band { background: var(--ink); color: #fff; } .editorial-band .muted { color: #b8c0cf; }
+.number-display { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .panel-soft { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .eyebrow { color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .page-title { margin: 8px 0 0; font-size: 38px; line-height: 1.08; font-weight: 800; } .page-intro { max-width: 660px; margin: 12px 0 0; color: var(--body); line-height: 1.55; }
