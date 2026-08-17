@@ -8,3 +8,5 @@ out/
 drizzle/meta/
 *.tsbuildinfo
 coverage/
+
+.vercel
