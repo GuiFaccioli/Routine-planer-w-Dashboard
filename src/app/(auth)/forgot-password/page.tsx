@@ -1,2 +1,2 @@
 import { ForgotPasswordForm } from "@/components/forgot-password-form";
-export default function ForgotPasswordPage() { return <main className="flex min-h-screen items-center justify-center bg-[var(--dark)] p-5"><ForgotPasswordForm /></main>; }
+export default function ForgotPasswordPage() { return <main className="auth-canvas"><aside className="auth-aside"><span className="brand">ritmo<span className="brand-mark">.</span></span><div><h1>Volte ao seu ritmo.</h1><p>Recupere o acesso e continue de onde parou.</p></div></aside><section className="auth-main"><ForgotPasswordForm /></section></main>; }
