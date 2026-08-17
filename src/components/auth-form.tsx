@@ -13,11 +13,26 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
     event.preventDefault(); setError(""); setPending(true);
     try {
       const values = Object.fromEntries(new FormData(event.currentTarget).entries());
-      const result = mode === "sign-in"
-        ? await authClient.signIn.email({ email: String(values.email), password: String(values.password), callbackURL: "/day" })
-        : await authClient.signUp.email({ name: String(values.name), email: String(values.email), password: String(values.password), callbackURL: "/verify-email" });
-      if (result.error) setError(result.error.message ?? "Não foi possível concluir a autenticação.");
-      else router.push(mode === "sign-in" ? "/day" : "/verify-email");
+      const email = String(values.email);
+      if (mode === "sign-in") {
+        const result = await authClient.signIn.email({ email, password: String(values.password), callbackURL: "/day" });
+        if (result.error) setError(result.error.message ?? "Não foi possível concluir a autenticação.");
+        else router.push("/day");
+        return;
+      }
+
+      const result = await authClient.signUp.email({ name: String(values.name), email, password: String(values.password), callbackURL: `/verify-email?email=${encodeURIComponent(email)}` });
+      if (result.error) {
+        setError(result.error.message ?? "Não foi possível concluir o cadastro.");
+        return;
+      }
+
+      const verification = await authClient.emailOtp.sendVerificationOtp({ email, type: "email-verification" });
+      if (verification.error) {
+        setError(verification.error.message ?? "A conta foi criada, mas não conseguimos enviar o código de confirmação.");
+        return;
+      }
+      router.push(`/verify-email?email=${encodeURIComponent(email)}`);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Não foi possível conectar ao serviço de autenticação.");
     } finally {
