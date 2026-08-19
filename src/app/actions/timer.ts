@@ -59,14 +59,6 @@ async function changeRunningTask(taskId: string, status: "paused" | "completed")
   });
 }
 
-export async function extendTaskBy15Minutes(taskId: string) {
-  const user = await requireUser();
-  const db = getDb();
-  const [task] = await db.select().from(dailyTasks).where(and(eq(dailyTasks.id, taskId), eq(dailyTasks.userId, user.id)));
-  if (!task) throw new Error("A tarefa não foi encontrada.");
-  await db.update(dailyTasks).set({ plannedDurationMinutes: task.plannedDurationMinutes + 15, updatedAt: new Date() }).where(eq(dailyTasks.id, taskId));
-}
-
 export async function switchRunningTask(taskId: string) {
   const user = await requireUser();
   const db = getDb();
