@@ -19,6 +19,13 @@ describe("focus timer", () => {
     expect(plannedDurationReached(state, new Date("2026-08-17T17:00:01Z"))).toBe(true);
   });
 
+  it("keeps counting actual focus after the planned duration", () => {
+    const now = new Date("2026-08-17T00:00:00Z");
+    expect(elapsedSeconds([
+      { id: "1", dailyTaskId: "task", startedAt: "2026-08-16T14:00:00Z", endedAt: "2026-08-17T00:00:00Z" },
+    ], now)).toBe(10 * 60 * 60);
+  });
+
   it("rejects invalid status transitions", () => {
     expect(() => transitionStatus("completed", "running")).toThrow("Não é possível");
   });

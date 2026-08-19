@@ -10,4 +10,12 @@ describe("summarizeReport", () => {
     expect(result).toMatchObject({ plannedMinutes: 150, focusedMinutes: 75, plannedTasks: 2, completedTasks: 1 });
     expect(result.byCategory.Estudo).toEqual({ plannedMinutes: 150, focusedMinutes: 75 });
   });
+
+  it("reports all focused time even when it exceeds the planned duration", () => {
+    const result = summarizeReport([
+      { id: "task", userId: "u", templateId: null, date: "2026-08-17", title: "Treino", category: "Saúde", plannedStart: "14:00", plannedDurationMinutes: 60, status: "completed" },
+    ], [{ id: "session", dailyTaskId: "task", startedAt: "2026-08-17T14:00:00Z", endedAt: "2026-08-18T00:00:00Z" }]);
+    expect(result.focusedMinutes).toBe(600);
+    expect(result.byCategory.Saúde.focusedMinutes).toBe(600);
+  });
 });
